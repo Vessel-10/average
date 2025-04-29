@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="src/output.css">
+    <title>Document</title>
+    <style>
+        @media (max-width:768px){
+            .whole-thing{
+                background-color: red;
+            }
+            .containers{
+                display: flex;
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-700 whole-thing">
+    <div class="container containers mx-auto mt-10">
+        <div class="grid grid-cols-3">
+            <form action="" id="form" class="bg-white p-5 shadow-lg forms">
+                <div class="flex flex-col">
+                    <div class="flex flex-col">
+                        <label 
+                            for=""
+                            class="text-black text-lg font-bold first-letter:uppercase pb-1"
+                        >assignment results</label>
+                        <input 
+                            type="text" 
+                            name="" 
+                            id="assignment"
+                            class="border-1 border-black p-2 outline-none"
+                        >
+                    </div>
+                    <div class="flex flex-col">
+                        <label 
+                            for=""
+                            class="text-black text-lg font-bold first-letter:uppercase pb-1"
+                        >mid-term results</label>
+                        <input 
+                            type="text" 
+                            name="" 
+                            id="midTerm"
+                            class="border-1 border-black p-2 outline-none"
+                        >
+                    </div>
+                    <div class="flex flex-col">
+                        <label 
+                            for=""
+                            class="text-black text-lg font-bold first-letter:uppercase pb-1"
+                        >end semester results</label>
+                        <input 
+                            type="text" 
+                            name="" 
+                            id="endSemester"
+                            class="border-1 border-black p-2 outline-none"
+                        >
+                    </div>
+                    <button     
+                        type="submit"  
+                        id="btnSubmit" 
+                        class="bg-sky-600 mt-5 p-2 text-[1.2em] font-bold text-white first-letter:uppercase hover:bg-sky-700 transition duration-300 ease-in-out"
+                    >send</button>
+                </div>
+            </form>
+            <table 
+                class="grid bg-white p-5 shadow-lg tables">
+                <thead>
+                    <tr>
+                        <th>assignment results</th>
+                        <th>mid-term results</th>
+                        <th>end semester results</th>
+                    </tr>
+                </thead>
+                <tbody id="tablebody"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('form');
+        const assignments = document.getElementById('assignment')
+        const midTerm = document.getElementById('midTerm')
+        const endSemester = document.getElementById('endSemester')
+        const btnSubmit = document.getElementById('btnSubmit')
+        // const tables = document.getElementById('tablebody')
+        
+        btnSubmit.addEventListener('click', e => {
+            e.preventDefault()
+            errorMessage()
+
+        })
+
+        
+        function errorMessage(){
+            if(assignments.value.trim() === "" || isNaN(assignments.value.trim())){
+                alert("Your marks for your assignment are not entered")
+                return false
+            }else if(midTerm.value.trim() === "" || isNaN(midTerm.value.trim())){
+                alert("Please enter youe mid-term results")
+                return false
+            }else if(endSemester.value.trim() === "" || isNaN(endSemester.value.trim())){
+                alert("Please enter your end semester results")
+                return false
+            }else{
+                alert("Thank you all is done")
+                inputResults()
+                displayAverage()
+                return true
+            }
+        }
+        function inputResults(){
+            const ment = assignments.value.trim()
+            const mid = midTerm.value.trim()
+            const end = endSemester.value.trim()
+            const tables = document.getElementById('tablebody')
+            
+
+            tables.innerHTML += `
+                <tr>
+                    <td>${ment}</td>
+                    <td>${mid}</td>
+                    <td>${end}</td>
+                </tr>
+            `
+
+            
+        }
+
+        function calculateAverage(){
+            const assignment = parseFloat(assignments.value.trim())
+            const mid = parseFloat(midTerm.value.trim())
+            const end = parseFloat(endSemester.value.trim())
+
+            const results = (assignment + mid + end) / 3
+            return results;
+            console.log(results)
+        }
+        function displayAverage(){
+            const average = calculateAverage()
+            console.log(average)
+        }
+    </script>
+</body>
+</html>
